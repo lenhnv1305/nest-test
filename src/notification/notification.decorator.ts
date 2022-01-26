@@ -54,4 +54,3 @@ export function Notification(
   };
 }
 
-// export const NotificationHandler = makeNotificationDecorator({ action: 'handler' });

@@ -6,7 +6,6 @@ import { NotificationHandlerContext } from 'src/notification/notification.decora
 export class QueueService {
   private readonly subject = new Subject<string>();
 
-
   createHandler(handler: Function, context: NotificationHandlerContext) {
     if (handler) {
       this.subject.subscribe((value) => {

@@ -13,7 +13,7 @@ import { NotificationService } from './notification.service';
 @Module({
   imports: [DiscoveryModule, QueueModule],
   providers: [NotificationService],
-  exports: [QueueModule]
+  exports: [QueueModule],
 })
 export class NotificationModule implements OnModuleInit {
   constructor(
@@ -27,27 +27,23 @@ export class NotificationModule implements OnModuleInit {
         CLASS_NOTIFICATION_OPTIONS,
       );
 
-      
-      const functionNotifications =
+    const functionNotifications =
       await this.discoveryService.providerMethodsWithMetaAtKey<NotificationHandlerConfig>(
-          FUNCTION_NOTIFICATION_OPTIONS,
-          );
-          
-    console.log('metadata: ', classNotifications);
-    console.log(
-      'function meta: ',
-      functionNotifications,
-    );
+        FUNCTION_NOTIFICATION_OPTIONS,
+      );
+
+    console.log('class metadata: ', classNotifications);
+    console.log('function meta: ', functionNotifications);
+
     for (const notification of classNotifications) {
       for (const functionItem of functionNotifications) {
         this.queueService.createHandler(
           (notification.discoveredClass.instance as any)[
             functionItem.discoveredMethod.methodName
           ],
-          { config: notification.meta}
+          { config: notification.meta },
         );
       }
     }
-
   }
 }
